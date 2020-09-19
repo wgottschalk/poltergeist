@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "projects": {
+    "poltergeist": {
+      "root": "apps/poltergeist",
+      "sourceRoot": "apps/poltergeist",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/next:build",
+          "options": {
+            "root": "apps/poltergeist",
+            "outputPath": "dist/apps/poltergeist"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "poltergeist:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "poltergeist:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "builder": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "poltergeist:build:production"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/poltergeist/tsconfig.json",
+              "apps/poltergeist/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/poltergeist/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/poltergeist/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "poltergeist-e2e": {
+      "root": "apps/poltergeist-e2e",
+      "sourceRoot": "apps/poltergeist-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/poltergeist-e2e/cypress.json",
+            "tsConfig": "apps/poltergeist-e2e/tsconfig.e2e.json",
+            "devServerTarget": "poltergeist:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "poltergeist:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["apps/poltergeist-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/poltergeist-e2e/**/*"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/next"
+  },
+  "schematics": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "poltergeist"
+}
