@@ -1,11 +1,19 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 import { Team } from '../../teams/models/team';
 
-@ObjectType()
-export class User {
-  @Field() id: string;
+class BaseUser {
   @Field() name: string;
   @Field() githubName: string;
   @Field() email: string;
-  @Field((type) => [Team]) teams: Team[];
+}
+
+@ObjectType()
+export class User extends BaseUser {
+  @Field((type) => Int) id: number;
+  @Field((type) => [Team], { nullable: true }) teams?: Team[];
+}
+
+@InputType()
+export class UserInput extends BaseUser {
+  @Field() test: string;
 }

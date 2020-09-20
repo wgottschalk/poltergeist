@@ -91,6 +91,14 @@
       "prefix": "graphql-backend",
       "schematics": {},
       "architect": {
+        "prisma": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "prisma {args.command}",
+            "cwd": "apps/graphql-backend",
+            "parallel": false
+          }
+        },
         "build": {
           "builder": "@nrwl/node:build",
           "options": {

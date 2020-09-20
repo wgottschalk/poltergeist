@@ -2,20 +2,25 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  createUser(userInput: UserInput!): User!
+}
+
 type Query {
-  user(id: String!): User
+  user(id: Int!): User
 }
 
 type Team {
+  id: Int!
   mailingGroup: String!
-  members: [User!]!
   name: String!
 }
 
 type User {
-  email: String!
-  githubName: String!
-  id: String!
-  name: String!
-  teams: [Team!]!
+  id: Int!
+  teams: [Team!]
+}
+
+input UserInput {
+  test: String!
 }
