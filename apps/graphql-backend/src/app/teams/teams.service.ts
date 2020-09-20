@@ -3,7 +3,7 @@ import { Team } from '../../graphql';
 
 @Injectable()
 export class TeamsService {
-  async list(inputs: { userId?: number } = {}): Promise<Team[]> {
+  async list(): Promise<Team[]> {
     return [];
   }
 }

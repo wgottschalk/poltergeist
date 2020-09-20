@@ -1,12 +1,4 @@
-import {
-  Args,
-  Resolver,
-  Query,
-  ResolveField,
-  Parent,
-  Int,
-  Mutation,
-} from '@nestjs/graphql';
+import { Args, Resolver, Query, ResolveField, Parent } from '@nestjs/graphql';
 import { Team, User } from '../../graphql';
 // import { TeamsService } from '../teams/teams.service';
 import { UsersService } from './users.service';
