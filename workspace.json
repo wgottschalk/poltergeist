@@ -1,17 +1,17 @@
 {
   "version": 1,
   "projects": {
-    "poltergeist": {
-      "root": "apps/poltergeist",
-      "sourceRoot": "apps/poltergeist",
+    "web-ui": {
+      "root": "apps/web-ui",
+      "sourceRoot": "apps/web-ui",
       "projectType": "application",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@nrwl/next:build",
           "options": {
-            "root": "apps/poltergeist",
-            "outputPath": "dist/apps/poltergeist"
+            "root": "apps/web-ui",
+            "outputPath": "dist/apps/web-ui"
           },
           "configurations": {
             "production": {}
@@ -20,12 +20,12 @@
         "serve": {
           "builder": "@nrwl/next:server",
           "options": {
-            "buildTarget": "poltergeist:build",
+            "buildTarget": "web-ui:build",
             "dev": true
           },
           "configurations": {
             "production": {
-              "buildTarget": "poltergeist:build:production",
+              "buildTarget": "web-ui:build:production",
               "dev": false
             }
           }
@@ -33,7 +33,7 @@
         "export": {
           "builder": "@nrwl/next:export",
           "options": {
-            "buildTarget": "poltergeist:build:production"
+            "buildTarget": "web-ui:build:production"
           }
         },
         "lint": {
@@ -41,36 +41,36 @@
           "options": {
             "linter": "eslint",
             "tsConfig": [
-              "apps/poltergeist/tsconfig.json",
-              "apps/poltergeist/tsconfig.spec.json"
+              "apps/web-ui/tsconfig.json",
+              "apps/web-ui/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/poltergeist/**/*"]
+            "exclude": ["**/node_modules/**", "!apps/web-ui/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/poltergeist/jest.config.js",
+            "jestConfig": "apps/web-ui/jest.config.js",
             "passWithNoTests": true
           }
         }
       }
     },
-    "poltergeist-e2e": {
-      "root": "apps/poltergeist-e2e",
-      "sourceRoot": "apps/poltergeist-e2e/src",
+    "web-ui-e2e": {
+      "root": "apps/web-ui-e2e",
+      "sourceRoot": "apps/web-ui-e2e/src",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/poltergeist-e2e/cypress.json",
-            "tsConfig": "apps/poltergeist-e2e/tsconfig.e2e.json",
-            "devServerTarget": "poltergeist:serve"
+            "cypressConfig": "apps/web-ui-e2e/cypress.json",
+            "tsConfig": "apps/web-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-ui:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "poltergeist:serve:production"
+              "devServerTarget": "web-ui:serve:production"
             }
           }
         },
@@ -78,8 +78,63 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "tsConfig": ["apps/poltergeist-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/poltergeist-e2e/**/*"]
+            "tsConfig": ["apps/web-ui-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-ui-e2e/**/*"]
+          }
+        }
+      }
+    },
+    "graphql-backend": {
+      "root": "apps/graphql-backend",
+      "sourceRoot": "apps/graphql-backend/src",
+      "projectType": "application",
+      "prefix": "graphql-backend",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/graphql-backend",
+            "main": "apps/graphql-backend/src/main.ts",
+            "tsConfig": "apps/graphql-backend/tsconfig.app.json",
+            "assets": ["apps/graphql-backend/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/graphql-backend/src/environments/environment.ts",
+                  "with": "apps/graphql-backend/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "graphql-backend:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/graphql-backend/tsconfig.app.json",
+              "apps/graphql-backend/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/graphql-backend/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/graphql-backend/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
@@ -101,5 +156,5 @@
       }
     }
   },
-  "defaultProject": "poltergeist"
+  "defaultProject": "web-ui"
 }

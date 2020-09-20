@@ -1,0 +1,21 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  user(id: String!): User
+}
+
+type Team {
+  mailingGroup: String!
+  members: [User!]!
+  name: String!
+}
+
+type User {
+  email: String!
+  githubName: String!
+  id: String!
+  name: String!
+  teams: [Team!]!
+}
