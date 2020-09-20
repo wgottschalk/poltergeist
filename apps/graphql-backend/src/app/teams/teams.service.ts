@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Team } from './models/team';
+import { Team } from '../../graphql';
 
 @Injectable()
 export class TeamsService {

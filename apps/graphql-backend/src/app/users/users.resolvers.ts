@@ -7,25 +7,23 @@ import {
   Int,
   Mutation,
 } from '@nestjs/graphql';
-import { Team } from '../teams/models/team';
+import { Team, User } from '../../graphql';
 // import { TeamsService } from '../teams/teams.service';
-import { User, UserInput } from './models/user';
 import { UsersService } from './users.service';
 
-@Resolver((of) => User)
+@Resolver('User')
 export class UsersResolver {
   constructor(
     private usersService: UsersService // private teamsService: TeamsService
   ) {}
 
-  @Query((returns) => User, { name: 'user', nullable: true })
-  async user(
-    @Args('id', { type: () => Int }) id: number
-  ): Promise<User | undefined> {
+  @Query()
+  async user(@Args('id') id: number): Promise<User | undefined> {
+    console.log({ id, test: typeof id });
     return await this.usersService.get({ id });
   }
 
-  @ResolveField('teams', (returns) => [Team])
+  @ResolveField()
   async teams(@Parent() user: User): Promise<Team[]> {
     console.log({ user: JSON.stringify(user) });
     return [];
@@ -33,10 +31,10 @@ export class UsersResolver {
     // return teams;
   }
 
-  @Mutation((returns) => User)
-  async createUser(
-    @Args({ name: 'userInput', type: () => UserInput }) userInput: User
-  ): Promise<User> {
-    return await this.usersService.create(userInput);
-  }
+  // @Mutation()
+  // async createUser(
+  //   @Args() userInput: User
+  // ): Promise<User> {
+  //   return await this.usersService.create(userInput);
+  // }
 }

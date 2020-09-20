@@ -1,5 +1,4 @@
 import { Resolver } from '@nestjs/graphql';
-import { Team } from './models/team';
 
-@Resolver((of) => Team)
+@Resolver('Team')
 export class TeamsResolver {}

@@ -7,11 +7,10 @@ import { UsersModule } from './users/users.module';
   imports: [
     UsersModule,
     GraphQLModule.forRoot({
-      autoSchemaFile: join(
-        process.cwd(),
-        'apps/graphql-backend/src/schema.graphql'
-      ),
-      sortSchema: true,
+      typePaths: ['./**/*.graphql'],
+      definitions: {
+        path: join(process.cwd(), 'apps/graphql-backend/src/graphql.ts'),
+      },
     }),
   ],
 })

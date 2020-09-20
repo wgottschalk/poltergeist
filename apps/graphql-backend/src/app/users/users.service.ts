@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserCreateInput, UserWhereUniqueInput } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { User } from './models/user';
+import { User } from '../../graphql';
 
 @Injectable()
 export class UsersService {
