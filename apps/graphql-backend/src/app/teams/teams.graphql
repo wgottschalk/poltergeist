@@ -1,0 +1,5 @@
+type Team {
+  id: Int!
+  name: String!
+  mailingGroup: String!
+}

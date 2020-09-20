@@ -1,0 +1,13 @@
+type User {
+  id: Int!
+  name: String!
+  githubName: String!
+  email: String!
+  teams: [Team!]
+}
+
+input UserInput {
+  name: String!
+  githubName: String!
+  email: String!
+}
