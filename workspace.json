@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "projects": {
+    "web-ui": {
+      "root": "apps/web-ui",
+      "sourceRoot": "apps/web-ui",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/next:build",
+          "options": {
+            "root": "apps/web-ui",
+            "outputPath": "dist/apps/web-ui"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "web-ui:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "web-ui:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "builder": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "web-ui:build:production"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/web-ui/tsconfig.json",
+              "apps/web-ui/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-ui/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-ui-e2e": {
+      "root": "apps/web-ui-e2e",
+      "sourceRoot": "apps/web-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-ui-e2e/cypress.json",
+            "tsConfig": "apps/web-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": ["apps/web-ui-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-ui-e2e/**/*"]
+          }
+        }
+      }
+    },
+    "graphql-backend": {
+      "root": "apps/graphql-backend",
+      "sourceRoot": "apps/graphql-backend/src",
+      "projectType": "application",
+      "prefix": "graphql-backend",
+      "schematics": {},
+      "architect": {
+        "prisma": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "prisma {args.command}",
+            "cwd": "apps/graphql-backend",
+            "parallel": false
+          }
+        },
+        "prisma-migrate": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "prisma migrate {args.command} --experimental",
+            "cwd": "apps/graphql-backend/prisma",
+            "parallel": false
+          }
+        },
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/graphql-backend",
+            "main": "apps/graphql-backend/src/main.ts",
+            "tsConfig": "apps/graphql-backend/tsconfig.app.json",
+            "assets": ["apps/graphql-backend/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/graphql-backend/src/environments/environment.ts",
+                  "with": "apps/graphql-backend/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "graphql-backend:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "tsConfig": [
+              "apps/graphql-backend/tsconfig.app.json",
+              "apps/graphql-backend/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/graphql-backend/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/graphql-backend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/next"
+  },
+  "schematics": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "web-ui"
+}

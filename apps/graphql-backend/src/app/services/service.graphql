@@ -1,0 +1,19 @@
+type Mutation {
+  createService(userId: ID!, serviceInput: ServiceInput): Service
+  deployService(id: ID!): Boolean
+}
+
+type Service {
+  id: ID!
+  name: String!
+  buildCommand: String!
+  publishDirectory: String!
+  branchName: String!
+}
+
+input ServiceInput {
+  name: String!
+  buildCommand: String!
+  publishDirectory: String!
+  branchName: String!
+}
