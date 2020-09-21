@@ -99,6 +99,14 @@
             "parallel": false
           }
         },
+        "prisma-migrate": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "prisma migrate {args.command} --experimental",
+            "cwd": "apps/graphql-backend/prisma",
+            "parallel": false
+          }
+        },
         "build": {
           "builder": "@nrwl/node:build",
           "options": {

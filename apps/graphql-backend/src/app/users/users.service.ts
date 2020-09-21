@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserCreateInput, UserWhereUniqueInput } from '@prisma/client';
+import { User, UserCreateInput, UserWhereUniqueInput } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { User } from '../../graphql';
 
 @Injectable()
 export class UsersService {
@@ -11,7 +10,11 @@ export class UsersService {
     return await this.prisma.user.findOne({ where: uniqueInputs });
   }
 
-  async create(user: UserCreateInput): Promise<User> {
-    return await this.prisma.user.create({ data: user });
+  async create(userInput: UserCreateInput): Promise<User> {
+    return await this.prisma.user.create({ data: userInput });
+  }
+
+  async list(): Promise<User[]> {
+    return await this.prisma.user.findMany();
   }
 }

@@ -1,9 +1,18 @@
+type Query {
+  user(id: ID!): User
+  users: [User!]!
+}
+
+type Mutation {
+  createUser(userInput: UserInput): User
+}
+
 type User {
-  id: Int!
+  id: ID!
   name: String!
   githubName: String!
   email: String!
-  teams: [Team!]
+  services: [Service!]!
 }
 
 input UserInput {

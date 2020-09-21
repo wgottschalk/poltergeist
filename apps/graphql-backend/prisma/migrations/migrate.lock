@@ -1,0 +1,8 @@
+# Prisma Migrate lockfile v1
+
+20200920210557-add-members-join-table
+20200920214535-remove-teams-for-mvp
+20200920223007-add-service-table
+20200920225241-optional-user-for-service-table
+20200920230809-name-column-in-service
+20200920233105-index-on-user-id
