@@ -28,12 +28,7 @@ export class ServiceResolver {
     @Args('userId') userId: string,
     @Args('serviceInput') serviceInput: Service
   ): Promise<Service> {
-    console.log(JSON.stringify({ userId, serviceInput }));
-    const result = this.serviceService.create(userId, serviceInput);
-
-    console.log(JSON.stringify({ result }));
-
-    return result;
+    return await this.serviceService.create(userId, serviceInput);
   }
 
   /**
